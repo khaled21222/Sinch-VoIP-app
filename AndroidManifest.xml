@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="tecno.khaledtar.com.contolk">
+
+
+
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="false" />
+
+
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
+
+
+
+
+    <application
+        android:name=".ConTolk"
+        android:allowBackup="true"
+        android:icon="@drawable/contolklogo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="tecno.khaledtar.com.contolk"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="default_channel_id" />
+
+        <service
+            android:name=".Snich.SinchService"
+            android:enabled="true" >
+        <intent-filter >
+            <action android:name="tecno.khaledtar.com.contolk.Snich.SinchService"/>
+        </intent-filter>
+
+        </service>
+
+        <activity
+            android:name=".Snich.CallScreenForUserActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Snich.CallScreenForTranslatorActivity"
+            android:screenOrientation="portrait" />
+
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".Customers.EditCustomerProfileActivity" />
+        <activity android:name=".Translators.EditTranslatorProfileActivity" />
+
+        <activity
+            android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".Customers.CustomerOperationsActivity" />
+
+        <activity android:name=".Customers.RegularCallActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.regularCallActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Translators.TranslatorOperationActivity" />
+        <activity android:name=".InvoicesListActivity" />
+        <activity
+            android:name=".WaitingDialog"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity
+            android:name=".Snich.IncomingCallScreenActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".Customers.OnlineTranslatorsActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.OnlineTranslatorsActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
+        <activity android:name=".Customers.SelectedTranslatorActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SelectedTranslatorActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
+        <activity android:name=".Customers.CustomerOperationsActivity2" />
+
+        <receiver android:name=".WakeUpDeviceRecevier"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </receiver>
+
+
+        <activity
+            android:name=".WelcomeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="238d378e2573ca4fc5268fb149b94a7fff29c3c2" />
+    </application>
+
+</manifest>

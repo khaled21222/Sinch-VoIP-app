@@ -1,0 +1,148 @@
+
+configurations.all {
+    resolutionStrategy {
+        force 'com.android.support:support-v4:26.1.0'
+    }
+}
+
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+        google()
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
+apply plugin: 'com.android.application'
+
+apply plugin: 'io.fabric'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion '27.0.3'
+
+
+
+
+
+    defaultConfig {
+        applicationId "tecno.khaledtar.com.contolk"
+        multiDexEnabled true
+        targetSdkVersion 26
+        minSdkVersion 16
+        versionCode 15
+        versionName "2.0.7"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+
+     /*   signingConfigs {
+            release {
+                storeFile file("keyStore.jks")
+                storePassword "kh@924620"
+                keyAlias "key0"
+                keyPassword "kh@924620"
+                v2SigningEnabled false
+            }
+        }  */
+    }
+
+
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFile 'proguard-project.txt'
+
+        }
+
+    }
+
+
+
+}
+
+
+
+preBuild.doFirst {
+    String[] path = project.buildscript.sourceFile.getParent().split("/")
+    String taskName = path[path.size() - 1]
+    if (taskName.contains("-push") && !file("./google-services.json").exists()) {
+        outputFcmBuildError()
+    }
+}
+
+def outputFcmBuildError() {
+    System.err.println 'You are building one of Sinch sample projects that uses Firebase Cloud Messaging for delivering push notifications.'
+    System.err.println 'Android Studio FCM plugin requires \'google-services.json\' with correspondent \'package_name\' to be in gradle :app folder (e.g. in ./sinch-rtc-sample-push/)'
+    System.err.println 'Follow the Firebase Cloud Messaging manual here \'https://firebase.google.com/docs/android/setup\' to get one.'
+    System.err.println 'For details about Sinch Managed push notifications look here \'https://www.sinch.com/docs/voice/android/#pushnotifications\'.'
+    throw new GradleException('google-services.json NOT FOUND!')
+}
+
+dependencies {
+
+
+
+
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:support-vector-drawable:26.1.0'
+    implementation 'com.android.support:support-v4:26.1.0'
+  //  api fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs/main', include: '*.jar')
+
+    testImplementation 'junit:junit:4.12'
+  //  implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+
+    //noinspection GradleCompatible
+    implementation 'com.google.firebase:firebase-storage:11.6.0'
+    implementation 'com.google.firebase:firebase-core:11.6.0'
+    implementation 'com.google.firebase:firebase-auth:11.6.0'
+    implementation 'com.google.firebase:firebase-database:11.6.0'
+
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.firebase:firebase-client-android:2.3.1'
+
+    implementation 'com.intuit.sdp:sdp-android:1.0.3'
+
+    // 1 design
+    implementation 'com.android.support:design:26.1.0'
+    // 2 RecyclerView
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    // 3 CardView
+    implementation 'com.android.support:cardview-v7:26.1.0'
+    // 4 Picasso
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+
+    implementation 'de.hdodenhof:circleimageview:1.2.1'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.firebaseui:firebase-ui:0.6.0'
+
+    //pdf
+    // https://mvnrepository.com/artifact/com.itextpdf/itextpdf
+    implementation group: 'com.itextpdf', name: 'itextpdf', version: '5.0.6'
+
+    implementation 'com.google.firebase:firebase-crash:11.6.0'
+    implementation 'com.google.firebase:firebase-messaging:11.6.0'
+
+    implementation(name: 'sinch-android-rtc', version: '+', ext: 'aar')
+
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.0@aar') {
+        transitive = true
+    }
+
+    implementation 'com.android.support:multidex:1.0.1'
+
+
+
+}
+
+
+apply plugin: 'com.google.gms.google-services'
